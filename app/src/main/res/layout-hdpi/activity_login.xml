@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:id="@+id/l_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:padding="40dp"
+        android:weightSum="1.0" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:padding="10dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginBottom="70dp"
+            android:src="@drawable/logo" />
+
+        <EditText
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/roundtextbox"
+            android:ems="10"
+            android:paddingLeft="10dp"
+            
+            android:hint="Email Address"
+            android:inputType="textEmailAddress" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/txtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/roundtextbox"
+            android:ems="10"
+              android:paddingLeft="10dp"
+                android:hint="Password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:textColor="@color/blue"
+            android:background="@drawable/bluebutton"
+            android:textSize="18sp"
+   
+            android:text="Sing In" />
+
+        <TextView
+            android:id="@+id/txtReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/blue"
+            android:text="Register As Member" />
+
+    </LinearLayout>
+
+</ScrollView>

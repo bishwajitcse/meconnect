@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/bishwajit/Documents/Android/meconnect/app/libs/apache-mime4j-0.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ee4e66317c0d4325b1c82611c5d7e4405bcb688f">
+        <dex dex="/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/apache-mime4j-0.4-54455838f7442d49bf48dba3a9b5bdd502d4c538.jar" />
+    </item>
+    <item
+        jar="/Users/bishwajit/Documents/Android/meconnect/app/libs/universal-image-loader-1.9.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a85588bec3e2c4584d593d3f15df1677321bca72">
+        <dex dex="/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.3-c221a31ab3cb9dae93adb5196e9fa292baa951f0.jar" />
+    </item>
+    <item
+        jar="/Users/bishwajit/Documents/Android/meconnect/app/libs/httpmime-4.0-beta1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fe99ca4d65422ed2f8665794b007a17668eb4161">
+        <dex dex="/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/httpmime-4.0-beta1-10fb7871052e41dae400817ff37f4fc5d86b513f.jar" />
+    </item>
+    <item
+        jar="/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/18.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="8f11f56e350eacabf2273f646d981356eea0ed77">
+        <dex dex="/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/classes-b6dfc996c14f61d15d0d195861646ee8cd154a8c.jar" />
+    </item>
+    <item
+        jar="/Users/bishwajit/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/18.0.0/support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-2182c5096b1c2e13d2c5a4ff24e728bf5615b721.jar" />
+    </item>
+
+</items>

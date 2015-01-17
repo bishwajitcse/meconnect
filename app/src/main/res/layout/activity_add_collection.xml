@@ -1,0 +1,89 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:id="@+id/l_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:weightSum="1.0" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <Spinner
+                android:id="@+id/spMember"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_dropdownbg" />
+
+            <Spinner
+                android:id="@+id/spCollection"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_dropdownbg" />
+
+            <EditText
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:hint="Amount" />
+
+            <Spinner
+                android:id="@+id/spMonth"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_dropdownbg"
+                    android:entries="@array/spmonthvalue" />
+
+            <Spinner
+                android:id="@+id/spYear"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:entries="@array/spyearvalue"
+                android:background="@drawable/ic_dropdownbg" />
+            <EditText
+                android:id="@+id/txtmpesa"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:hint="MPESA" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_margin="20dp"
+            android:background="@color/blue"
+            android:text="Save"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</ScrollView>

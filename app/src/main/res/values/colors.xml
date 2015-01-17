@@ -1,0 +1,15 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="whitetext">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="redtheme">#ed1c24</color>
+    <color name="greenspices_light">#399545</color>
+    <color name="greenspices_dark">#0c881b</color>
+    <color name="graydark">#999999</color>
+    <color name="yellow_light">#dc9135</color>
+    <color name="yellow_dark">#cd822a</color>
+    <color name="blue">#00afef</color>
+	<color name="transparent">#00000000</color>
+		<color name="white">#fff</color>
+</resources>

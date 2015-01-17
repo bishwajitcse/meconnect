@@ -1,0 +1,281 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:id="@+id/l_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:weightSum="1.0" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp" >
+
+            <EditText
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Full Name"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp" >
+
+                <CheckBox
+                    android:id="@+id/chMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male" />
+
+                <CheckBox
+                    android:id="@+id/chFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spMarried"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/dropdown"
+                android:entries="@array/married" />
+
+            <com.nexa.adapter.DatePickerDialogFragment
+                android:id="@+id/txtdob"
+                style="@android:style/Widget.Holo.Spinner"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ic_sm_dropdown"
+                android:hint="Date"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/txtbirthPlace"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="District of birthday"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtCurrectLocation"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Current residence"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtOccupation"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Occupation"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtworkplace"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Place of work"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtid"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Id No"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtMobile"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Mobile"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtChild"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="No of Children"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/txteditSpouse"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Spouse Name"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:visibility="gone" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/txtNominee"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Next of Kin"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <Spinner
+                android:id="@+id/spRelation"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/dropdown"
+                android:entries="@array/nomine" />
+
+            <EditText
+                android:id="@+id/txtContact"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundtextbox"
+                android:ems="10"
+                android:hint="Contact"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:background="@drawable/preloader" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" >
+
+                <TextView
+                    android:id="@+id/txtPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.43"
+                    android:paddingRight="30dp"
+                    android:text="Add Photo" />
+
+                <TextView
+                    android:id="@+id/txtSpose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:paddingLeft="30dp"
+                    android:text="Add Spouse" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgfamily"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:background="@drawable/preloader" />
+
+            <TextView
+                android:id="@+id/txtfamilyimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.43"
+                android:paddingRight="30dp"
+                android:text="Add Family Photo" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_margin="20dp"
+            android:background="@color/blue"
+            android:text="Save"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</ScrollView>

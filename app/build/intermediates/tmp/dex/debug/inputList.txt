@@ -1,0 +1,6 @@
+/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/classes/debug
+/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/httpmime-4.0-beta1-10fb7871052e41dae400817ff37f4fc5d86b513f.jar
+/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.3-c221a31ab3cb9dae93adb5196e9fa292baa951f0.jar
+/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/apache-mime4j-0.4-54455838f7442d49bf48dba3a9b5bdd502d4c538.jar
+/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/classes-b6dfc996c14f61d15d0d195861646ee8cd154a8c.jar
+/Users/bishwajit/Documents/Android/meconnect/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-2182c5096b1c2e13d2c5a4ff24e728bf5615b721.jar

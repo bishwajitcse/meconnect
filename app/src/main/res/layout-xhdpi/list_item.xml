@@ -1,0 +1,136 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:id="@+id/layTop">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+
+
+   >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtlistEmail" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="phone"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtPhone" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="add"
+            android:id="@+id/txtdob" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="gender"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtlistGender" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Occ"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtOco" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="id"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtID" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtAddress" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtDistrict" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/spouse" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtNominee" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtRelationship" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/txtnContact" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/viewHead"
+        android:layout_width="match_parent"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:background="#59c7d6"
+        android:layout_marginBottom="10dp"
+        android:layout_height="50dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="center"
+            android:text="Family Photo"
+           android:textColor="@color/white"
+            android:id="@+id/textView" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/txtfimage"
+        android:src="@drawable/ic_hoteldetails"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="20dp"
+        android:background="@color/blue"
+        android:text="Edit"
+        android:textColor="@color/white" />
+</LinearLayout>
