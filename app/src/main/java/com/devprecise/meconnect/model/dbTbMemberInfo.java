@@ -109,9 +109,9 @@ public class dbTbMemberInfo {
     }
     public String getDistrictofbirth(){ return  this.districtofbirth;}
 
-    public void setCurrentcity(String cucity) {
-        this.currentcity = cucity;
-    }
+   // public void setCurrentcity(String cucity) {
+       // this.currentcity = cucity;
+   // }
     public String getCurrentcity(){ return  this.currentcity;}
 
     public void setOcc(String occ) {

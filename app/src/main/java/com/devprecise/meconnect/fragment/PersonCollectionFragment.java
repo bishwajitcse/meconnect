@@ -13,17 +13,23 @@ import com.devprecise.meconnect.R;
 import com.devprecise.meconnect.RootActivity;
 import com.devprecise.meconnect.adapter.MemberAdapter;
 import com.devprecise.meconnect.beanclass.MemberBean;
+import com.devprecise.meconnect.database.SofitelDbHelper;
+import com.devprecise.meconnect.model.dbTbCollection;
+import com.devprecise.meconnect.model.dbTbMemberInfo;
 import com.devprecise.meconnect.utils.Service;
 import com.devprecise.meconnect.utils.Service.ResultJSONArray;
 
 
 
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,7 +54,10 @@ public class PersonCollectionFragment extends Fragment{
 	ListAdapter adapter;
 	ArrayList<HashMap<String, String>> assignment = new ArrayList<HashMap<String, String>>();
 	 Spinner spMember,spType,spMonth,spYear;
+    TextView txtAmt;
 	 private ArrayList<MemberBean> memberlist= new ArrayList<MemberBean>();
+
+    SofitelDbHelper db;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -56,7 +65,7 @@ public class PersonCollectionFragment extends Fragment{
 		// Retrieving the currently selected item number
 		
 		mcontext=container.getContext();
-		
+		db=new SofitelDbHelper(mcontext);
 		((RootActivity)getActivity()).getSupportActionBar().setTitle("Collection");
 		// Creating view correspoding to the fragment
 		View v = inflater.inflate(R.layout.personalcollection_layout, container, false);
@@ -65,8 +74,9 @@ public class PersonCollectionFragment extends Fragment{
 		 custom_fontbold= Typeface.createFromAsset(mcontext.getAssets(), "fonts/GothamRnd-Bold.otf");
 		 custom_fontregular= Typeface.createFromAsset(mcontext.getAssets(), "fonts/GothamRnd-Light.otf");
 		 custom_fontmedium= Typeface.createFromAsset(mcontext.getAssets(), "fonts/GothamRnd-Medium.otf");
-		
-		
+
+        txtAmt=(TextView)v.findViewById(R.id.txtAmt1);
+
 			lv = (ListView) v.findViewById(R.id.listView1);
 
         String id= MyApp.getInstance().getSetting().getString("churchid","");
@@ -77,9 +87,9 @@ public class PersonCollectionFragment extends Fragment{
 					addlistview(records);
 				}
 			});
-			
 
-		
+
+
 		// SetHasOptionsMenu(true);
 		
 		return v;
@@ -214,7 +224,8 @@ public class PersonCollectionFragment extends Fragment{
         
 
     }
-	  @Override
+
+	  /*  @Override
 	  public void onResume() {
 	     Log.i("DEBUG", "onResume of HomeFragment");
           String id= MyApp.getInstance().getSetting().getString("churchid","");
@@ -228,6 +239,7 @@ public class PersonCollectionFragment extends Fragment{
 			});
 	     super.onResume();
 	  }
+	  */
 
 	  @Override
 	  public void onPause() {
@@ -236,40 +248,57 @@ public class PersonCollectionFragment extends Fragment{
 	  }
 	  
 	public void addlistview(JSONArray records) throws Exception {
-		int j = 0;
-		List<String> listimage = new ArrayList<String>();
-		List<String> listimage2 = new ArrayList<String>();
-		
-		if(assignment.size()>0)
-			assignment.clear();
-		
-		for (int i = 0; i < records.length(); i++) {
-			j++;
-			JSONObject record = records.getJSONObject(i);
+        int j = 0;
+        double sum = 0.0;
+        List<String> listimage = new ArrayList<String>();
+        List<String> listimage2 = new ArrayList<String>();
 
-		
-			HashMap ass = new HashMap();
-		
-			ass.put("id", Service.get(record, "CollectionID") + "");
-			ass.put("name", Service.get(record, "FullName") + "");
-			ass.put("phone", Service.get(record, "Phone") + "");
-			ass.put("email", Service.get(record, "Email") + "");
-			ass.put("date", Service.get(record, "CreateDate") + "");
-			ass.put("collectiontype", Service.get(record, "Name") + "");
-			ass.put("amount", Service.get(record, "Amount") + "");
-			
-			ass.put("month", Service.get(record, "CMonth") + "");
-			ass.put("year", Service.get(record, "CYear") + "");
-			
-			assignment.add(ass);
+        if (assignment.size() > 0)
+            assignment.clear();
+        db.deleteAllCollection();
 
-		
-		}
+        for (int i = 0; i < records.length(); i++) {
+            j++;
+            JSONObject record = records.getJSONObject(i);
+
+            dbTbCollection tb = new dbTbCollection();
+
+            HashMap ass = new HashMap();
+
+            tb.setID(i + 1);
+            ass.put("id", Service.get(record, "CollectionID") + "");
+
+            tb.setCollectionID(Service.get(record, "CollectionID"));
+
+            ass.put("name", Service.get(record, "FullName") + "");
+            tb.setMemberName(Service.get(record, "FullName"));
+            ass.put("phone", Service.get(record, "Phone") + "");
+            ass.put("email", Service.get(record, "Email") + "");
+            ass.put("date", Service.get(record, "CreateDate") + "");
+            tb.setDate(Service.get(record, "CreateDate"));
+            ass.put("collectiontype", Service.get(record, "Name") + "");
+            tb.setCollectionName(Service.get(record, "Name"));
+            ass.put("amount", Service.get(record, "Amount") + "");
+            sum += Float.parseFloat(Service.get(record, "Amount"));
+            tb.setAmount(Service.get(record, "Amount"));
+            ass.put("month", Service.get(record, "CMonth") + "");
+            ass.put("year", Service.get(record, "CYear") + "");
+
+            assignment.add(ass);
+
+            db.createCollection(tb);
+
+
+        }
+
+
+
+        txtAmt.setText("Total Amount: "+sum+"");
 
 		adapter = new MemberAdapter(mcontext, assignment,R.layout.personalcollection_list,
-			new String[] { "name","amount"}, new int[] { R.id.textView5,R.id.textView7});
+		new String[] { "name","amount"}, new int[] { R.id.textView5,R.id.textView7});
 
-	    lv.setAdapter(adapter);
+	   lv.setAdapter(adapter);
 	    
 	    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -291,4 +320,80 @@ public class PersonCollectionFragment extends Fragment{
 
 		//lv.onLoadMoreComplete();
 	}
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Auto-generated method stub
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.add_new_member, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) mcontext.getSystemService(Context.SEARCH_SERVICE);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        // searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        // Assumes current activity is the searchable activity
+        //  searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        // searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                String id= MyApp.getInstance().getSetting().getString("churchid","");
+                List<dbTbCollection> allCollection=db.getAllCollection(id,s);
+                double sum=0;
+                if (assignment.size() > 0)
+                    assignment.clear();
+
+                for(int i=0;i<allCollection.size();i++){
+                    HashMap ass = new HashMap();
+
+
+                    System.out.println(allCollection.get(i).getAmount());
+
+                    ass.put("id", allCollection.get(i).getCollectionID());
+
+
+
+                    ass.put("name", allCollection.get(i).getMemberName());
+
+
+                    ass.put("date",allCollection.get(i).getDate()+ "");
+
+                    ass.put("collectiontype",allCollection.get(i).getCollectionName()+ "");
+
+                    ass.put("amount", allCollection.get(i).getAmount() + "");
+                    sum += Float.parseFloat(allCollection.get(i).getAmount());
+
+                    assignment.add(ass);
+                }
+                txtAmt.setText("Total Amount: "+sum+"");
+               // JSONArray records=new JSONArray();
+                //addlistview(records,0);
+                //addListData(allmember);
+                adapter = new MemberAdapter(mcontext, assignment,R.layout.personalcollection_list,
+                        new String[] { "name","amount"}, new int[] { R.id.textView5,R.id.textView7});
+
+                lv.setAdapter(adapter);
+               ( (BaseAdapter)lv.getAdapter()).notifyDataSetChanged();
+               lv.invalidateViews();
+              //  lv.refreshDrawableState();
+
+                //Toast.makeText(mcontext,s,Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+
+
+    }
 }

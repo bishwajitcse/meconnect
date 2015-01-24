@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.devprecise.meconnect.model.dbTbCollection;
 import com.devprecise.meconnect.model.dbTbMemberInfo;
 
  
@@ -23,7 +24,7 @@ public class SofitelDbHelper extends SQLiteOpenHelper {
     private static final String LOG = SofitelDbHelper.class.getName();
  
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "meConnect";
@@ -31,13 +32,21 @@ public class SofitelDbHelper extends SQLiteOpenHelper {
     // Table Names
     private static final String TABLE_MemberInfo = "tbMemberInfo";
   
-    private static final String TABLE_HotelInfo = "tbhotelinfo";
+    private static final String TABLE_Collection = "tbCollection";
     private static final String TABLE_UserInfo = "tbuserinfo";
     private static final String TABLE_GcmStatus = "tbgcmpush";
  
     // Common column names
     private static final String KEY_ID = "id";
     private static final String KEY_CREATED_AT = "created_at";
+
+
+
+
+    private static final String Key_Collectionid="Collectionid";
+    private static final String Key_CollectionName="CollectionName";
+    private static final String Key_CollectionDate="CollectionDate";
+    private static final String Key_CollectionAmt="CollectionAmt";
 
     
 
@@ -86,7 +95,16 @@ public class SofitelDbHelper extends SQLiteOpenHelper {
             +KEY_User_family_image +" TEXT," +KEY_User_spouseimage +" TEXT,"+KEY_User_spouse +" TEXT,"
             +KEY_STATUS + " INTEGER," + KEY_CREATED_AT
             + " DATETIME" + ")";
- 
+
+
+    private static final String CREATE_TABLE_Collection= "CREATE TABLE "
+            + TABLE_Collection + "(" + KEY_ID + " TEXT," + KEY_User_Name
+            + " TEXT,"+ Key_Collectionid +" TEXT," + Key_CollectionAmt
+            + " TEXT,"+ Key_CollectionName +" TEXT,"+ Key_CollectionDate +" TEXT,"
+            +KEY_STATUS + " INTEGER," + KEY_CREATED_AT
+            + " DATETIME" + ")";
+
+
 
     public SofitelDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -97,14 +115,16 @@ public class SofitelDbHelper extends SQLiteOpenHelper {
  
         // creating required tables
         db.execSQL(CREATE_TABLE_Member);
-
+        db.execSQL(CREATE_TABLE_Collection);
         
     }
  
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // on upgrade drop older tables
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HotelInfo);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_Collection);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MemberInfo);
 
         // create new tables
         onCreate(db);
@@ -227,6 +247,8 @@ public class SofitelDbHelper extends SQLiteOpenHelper {
 
         return td;
     }
+
+
     public void delleteAllMember(String churchid) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from "+ TABLE_MemberInfo+" where "+ KEY_User_Churchid+"='"+churchid+"'");
@@ -275,11 +297,80 @@ public class SofitelDbHelper extends SQLiteOpenHelper {
         DBUtil.safeCloseDataBase(db);
         return todo_id;
     }
-    
 
 
-    
-    
+    public long createCollection(dbTbCollection collection) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID,collection.getId()+"");
+        values.put(KEY_User_Name, collection.getMemberName());
+
+        values.put(Key_Collectionid, collection.getCollectionID());
+        values.put(Key_CollectionName, collection.getCollectionName());
+        values.put(Key_CollectionAmt, collection.getAmount());
+        values.put(Key_CollectionDate, collection.getDate());
+
+        values.put(KEY_STATUS, "1");
+
+        values.put(KEY_CREATED_AT, getDateTime());
+
+
+        // insert row
+        long todo_id = db.insert(TABLE_Collection, null, values);
+
+        // assigning tags to todo
+     /*   for (long tag_id : tag_ids) {
+            createTodoTag(todo_id, tag_id);
+        }*/
+        //  DBUtil.safeCloseCursor(c);
+        DBUtil.safeCloseDataBase(db);
+        return todo_id;
+    }
+
+    public List<dbTbCollection> getAllCollection(String churchid,String name) {
+        List<dbTbCollection> todos = new ArrayList<dbTbCollection>();
+
+        String membername="";
+        String selectQuery = "SELECT  * FROM " + TABLE_Collection ;//+" where "+KEY_User_Churchid+" = '"+churchid+"' ";
+
+        if(!name.equalsIgnoreCase("")){
+            membername="  "+ KEY_User_Name +" like '%"+name+"%'";
+            selectQuery = "SELECT  * FROM " + TABLE_Collection +" where "+ membername;
+        }
+
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst() && c!=null) {
+            do {
+
+                dbTbCollection td = new dbTbCollection();
+                td.setID(c.getInt((c.getColumnIndex(KEY_ID))));
+
+                td.setMemberName((c.getString(c.getColumnIndex(KEY_User_Name))));
+                td.setCollectionName((c.getString(c.getColumnIndex(Key_CollectionName))));
+                td.setCollectionID((c.getString(c.getColumnIndex(Key_Collectionid))));
+                td.setDate((c.getString(c.getColumnIndex(Key_CollectionDate))));
+                td.setAmount((c.getString(c.getColumnIndex(Key_CollectionAmt))));
+
+
+                // adding to todo list
+                todos.add(td);
+            } while (c.moveToNext());
+        }
+
+        return todos;
+    }
+
+    public void deleteAllCollection() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from "+ TABLE_Collection);
+    }
     /*******************/
  
     

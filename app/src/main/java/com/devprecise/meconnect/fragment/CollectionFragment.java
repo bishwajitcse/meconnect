@@ -299,7 +299,7 @@ public class CollectionFragment extends Fragment{
 
 		
 		}
-        txtAmt.setText(sum+"");
+        txtAmt.setText("Total Amount: "+sum+"");
 
 		adapter = new MemberAdapter(mcontext, assignment,R.layout.membercollection_list,
 			new String[] { "id","collectiontype","amount"}, new int[] { R.id.textView4,R.id.textView5,R.id.textView7});

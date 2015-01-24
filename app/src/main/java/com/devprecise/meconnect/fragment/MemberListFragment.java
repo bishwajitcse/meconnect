@@ -65,6 +65,7 @@ public class MemberListFragment extends Fragment{
 	ArrayList<HashMap<String, String>> assignment = new ArrayList<HashMap<String, String>>();
 
     SofitelDbHelper db;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -83,7 +84,8 @@ public class MemberListFragment extends Fragment{
 		 custom_fontmedium= Typeface.createFromAsset(mcontext.getAssets(), "fonts/GothamRnd-Medium.otf");
 		
 		 Button btnAdd=(Button)v.findViewById(R.id.btnAdd);
-		 
+        TextView txtTotal=(TextView)v.findViewById(R.id.txtTotal);
+        txtTotal.setTypeface(custom_fontmedium);
 		 btnAdd.setTypeface(custom_fontmedium);
 		 
 			lv = (ListView) v.findViewById(R.id.listView1);
@@ -92,10 +94,10 @@ public class MemberListFragment extends Fragment{
 
         String id= MyApp.getInstance().getSetting().getString("churchid","");
         List<dbTbMemberInfo> allmember=db.getAllMember(id,"");
+
         if(allmember.size()>0){
-
             addListData(allmember);
-
+            txtTotal.setText("Total Members: "+allmember.size()+"");
 
         }else {
             new Service(mcontext).getRecords("api.php?f=getallmembers&id="+id, new ResultJSONArray() {
@@ -150,6 +152,8 @@ public class MemberListFragment extends Fragment{
 
         return v;
 	}
+
+
 
     public void addListData(  List<dbTbMemberInfo> allmember){
         if(assignment.size()>0)
@@ -243,6 +247,7 @@ public class MemberListFragment extends Fragment{
 
     }
 
+
     public void insertDb(JSONArray records){
         String id= MyApp.getInstance().getSetting().getString("churchid","");
 
@@ -294,21 +299,21 @@ public class MemberListFragment extends Fragment{
 
     }
 	
-	/*  @Override
+	 @Override
 	  public void onResume() {
 	     Log.i("DEBUG", "onResume of HomeFragment");
-          String id= MyApp.getInstance().getSetting().getString("churchid","");
-	     new Service(mcontext,false).getRecords("api.php?f=getallmembers&id="+id, new ResultJSONArray() {
+         String id= MyApp.getInstance().getSetting().getString("churchid","");
+         List<dbTbMemberInfo> allmember=db.getAllMember(id,"");
 
-				public void completed(JSONArray records) throws Exception {
-					// TODO Auto-generated method stub
-					addlistview(records);
-					((BaseAdapter) lv.getAdapter()).notifyDataSetChanged();
-				}
-			});
+         if(allmember.size()>0){
+             addListData(allmember);
+
+             ((BaseAdapter) lv.getAdapter()).notifyDataSetChanged();
+         }
+
 	     super.onResume();
 	  }
-	  */
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

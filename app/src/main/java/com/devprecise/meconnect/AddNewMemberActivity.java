@@ -16,9 +16,12 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.devprecise.meconnect.database.SofitelDbHelper;
 import com.devprecise.meconnect.model.dbTbMemberInfo;
+import com.devprecise.meconnect.utils.Service;
 import com.devprecise.meconnect.utils.Utils;
 import com.nexa.adapter.DatePickerDialogFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -62,12 +65,13 @@ import android.widget.Toast;
 
 public class AddNewMemberActivity extends Activity {
 	Typeface custom_fontbold,custom_fontregular,custom_fontmedium;
-	Bitmap image;
-	String imgPath="",imgPath2="";
+	//Bitmap image;
+	String imgPath="",imgPath2="",imgPath3="";
 	private static final int IMAGE_PICK 	= 1;
 	private static final int IMAGE_PICK2	= 2;
+    private static final int IMAGE_PICK3	= 3;
 	private String selectedImagePath;
-	ImageView imgGallery,imgfamily;
+	ImageView imgGallery,imgfamily,imgSpouse;
 	int i=0;
 	EditText txtname,txtEmail,txtPhone,txtEditSpouse,txtChild,txtcontact;
 
@@ -84,6 +88,7 @@ public class AddNewMemberActivity extends Activity {
 	String name="",mid="";
 
     SofitelDbHelper db;
+    TextView txtSpouseImageTitle;
     private static final String[] peopele = new String[] { "Married",
             "Single"};
 
@@ -127,12 +132,14 @@ public class AddNewMemberActivity extends Activity {
 		custom_fontmedium= Typeface.createFromAsset(this.getAssets(), "fonts/GothamRnd-Medium.otf");
 
 
-       dbTbMemberInfo tbmember= db.getMember(mid);
+       final dbTbMemberInfo tbmember= db.getMember(mid);
 
 
 		txtname=(EditText)findViewById(R.id.txtName);
 		txtname.setText(tbmember.getName());
+
 		txtname.setTypeface(custom_fontregular);
+
 		txtEmail=(EditText)findViewById(R.id.txtEmail);
 		txtEmail.setText(tbmember.getEmail());
 		txtEmail.setTypeface(custom_fontregular);
@@ -157,13 +164,15 @@ public class AddNewMemberActivity extends Activity {
 		
 		
 
-
+        if(tbmember.getGender()!=null)
 		if(tbmember.getGender().equalsIgnoreCase("Male")){
 			chMale.setChecked(true);
 		}
 		else{
 			chFeMale.setChecked(true);
 		}
+        else
+           chMale.setChecked(true);
 
 		txtbirthplace=(EditText)findViewById(R.id.txtbirthPlace);
 		txtbirthplace.setTypeface(custom_fontregular);
@@ -171,8 +180,10 @@ public class AddNewMemberActivity extends Activity {
 
 		txtcurlocation=(EditText)findViewById(R.id.txtCurrectLocation);
 		txtcurlocation.setTypeface(custom_fontregular);
-		txtcurlocation.setText(tbmember.getCurrentcity());
+		txtcurlocation.setText(tbmember.getResidence());
+
 		txtoccupation=(EditText)findViewById(R.id.txtOccupation);
+
 		txtoccupation.setTypeface(custom_fontregular);
 		txtoccupation.setText(tbmember.getOcc());
 		txtwork=(EditText)findViewById(R.id.txtworkplace);
@@ -193,6 +204,11 @@ public class AddNewMemberActivity extends Activity {
 		txtcontact.setText(tbmember.getContact());
 		txtdob=(DatePickerDialogFragment)findViewById(R.id.txtdob);
 		spRelation=(Spinner)findViewById(R.id.spRelation);
+
+        imgSpouse=(ImageView)findViewById(R.id.imgSpouse);
+        txtSpouseImageTitle=(TextView)findViewById(R.id.imgSpouseTitle);
+        txtSpouseImageTitle.setTypeface(custom_fontbold);
+
         MyRelationAdpater myrealtion = new MyRelationAdpater(this);
 
         spRelation.setAdapter(myrealtion);
@@ -249,6 +265,7 @@ public class AddNewMemberActivity extends Activity {
 		txtSpouse.setTypeface(custom_fontbold);
 		txtEditSpouse=(EditText)findViewById(R.id.txteditSpouse);
 		txtEditSpouse.setTypeface(custom_fontregular);
+        txtEditSpouse.setText(tbmember.getSpouse());
 
 		options = new DisplayImageOptions.Builder()
 		.showImageOnLoading(R.drawable.preloader)
@@ -266,7 +283,7 @@ public class AddNewMemberActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if(nullCheck()){
-					if(name.equalsIgnoreCase("")){
+					if(tbmember.getName().equalsIgnoreCase("")){
 						dialogp = ProgressDialog.show(AddNewMemberActivity.this, "", "Add Profile Information...", true);
 						new Thread(new Runnable() {
 							public void run() {
@@ -274,7 +291,20 @@ public class AddNewMemberActivity extends Activity {
 									if(SendMultipartFile()){
 										Log.i("ok upload","ok");
 										dialogp.dismiss();
-										finish();
+                                        String id= MyApp.getInstance().getSetting().getString("churchid","");
+                                        new Service(getApplicationContext(),false).getRecords("api.php?f=getallmembers&id="+id, new Service.ResultJSONArray() {
+
+                                            public void completed(JSONArray records) throws Exception {
+                                                // TODO Auto-generated method stub
+
+                                                insertDb(records);
+                                                finish();
+                                                //addlistview(records);
+                                            }
+                                        });
+
+
+
 									}
 									else
 									{
@@ -303,7 +333,18 @@ public class AddNewMemberActivity extends Activity {
 									if(UpdateMultipartFile()){
 										Log.i("ok upload","ok");
 										dialogp.dismiss();
-										finish();
+                                        String id= MyApp.getInstance().getSetting().getString("churchid","");
+                                        new Service(getApplicationContext(),false).getRecords("api.php?f=getallmembers&id="+id, new Service.ResultJSONArray() {
+
+                                            public void completed(JSONArray records) throws Exception {
+                                                // TODO Auto-generated method stub
+
+                                                insertDb(records);
+                                                finish();
+                                                //addlistview(records);
+                                            }
+                                        });
+										//finish();
 									}
 									else
 									{
@@ -379,7 +420,22 @@ public class AddNewMemberActivity extends Activity {
 
 			}
 		});
-		
+
+        //imgSpouse=(ImageView)findViewById(R.id.imgSpouse);
+        txtSpouseImageTitle.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+
+
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Sofitel"), IMAGE_PICK3);
+
+            }
+        });
+
 		if(!pimage.equalsIgnoreCase("")){
 			ImageLoader.getInstance().displayImage(pimage, imgGallery, options,new SimpleImageLoadingListener() {
 				@Override
@@ -432,6 +488,57 @@ public class AddNewMemberActivity extends Activity {
 
 	}
 
+    public void insertDb(JSONArray records){
+        String id= MyApp.getInstance().getSetting().getString("churchid","");
+
+        db.delleteAllMember(id);
+
+        try{
+            for (int i = 0; i < records.length(); i++) {
+
+                JSONObject record = records.getJSONObject(i);
+
+                dbTbMemberInfo tb = new dbTbMemberInfo();
+
+                tb.setId(Integer.parseInt(Service.get(record, "MemberID").toString()));
+                tb.setName(Service.get(record, "FullName") + "");
+                tb.setMobile( Service.get(record, "Phone") + "");
+                tb.setGender(Service.get(record,"Gender") + "");
+                tb.setSpouse(Service.get(record, "Spouse") + "");
+
+                tb.setEmail( Service.get(record, "Email") + "");
+                tb.setProfileimage(Service.get(record, "Photo") + "");
+                tb.setChild( Service.get(record, "Children") + "");
+
+                tb.setMarrite( Service.get(record, "MarriedStatus") + "");
+                tb.setDob( Service.get(record, "Dob") + "");
+                //tb.setDob( "dob");
+                tb.setDistrictofbirth( Service.get(record, "District") + "");
+                tb.setResidence(Service.get(record, "CurLocation") + "");
+                // tb.setResidence("res");
+                tb.setOcc( Service.get(record, "Occupation") + "");
+                // tb.setOcc("occ");
+                tb.setPlaceofwork(Service.get(record, "work") + "");
+
+                tb.setIdno( Service.get(record, "Idno") + "");
+                //tb.setIdno("id");
+                tb.setNominee( Service.get(record, "nominee") + "");
+                //tb.setNominee("nominee");
+                tb.setRelation( Service.get(record, "relationship") + "");
+                tb.setContact( Service.get(record, "contact") + "");
+                tb.setAddress(Service.get(record, "address") + "");
+                tb.setFamilyimage(Service.get(record, "familyimage") + "");
+                tb.setChurchid(id);
+                long tag1_id = db.createHotelInfo(tb);
+            }
+        }
+        catch (Exception e){
+
+        }
+
+
+    }
+
 	public boolean SendMultipartFile() throws ClientProtocolException, IOException {
 
 		String upLoadServerUri=Utils.url+"api.php?f=registration";
@@ -445,7 +552,8 @@ public class AddNewMemberActivity extends Activity {
 		
 		if(!imgPath2.equals(""))
 			entity.addPart("uploaded_file2", new FileBody(new File(imgPath2)));
-
+        if(!imgPath3.equals(""))
+            entity.addPart("uploaded_file3", new FileBody(new File(imgPath3)));
 		entity.addPart("name", new StringBody(txtname.getText()+""));
 		entity.addPart("email", new StringBody(txtEmail.getText()+""));
 		entity.addPart("phone",new StringBody(txtPhone.getText()+""));
@@ -513,6 +621,9 @@ public class AddNewMemberActivity extends Activity {
 		if(!imgPath2.equals(""))
 			entity.addPart("uploaded_file2", new FileBody(new File(imgPath2)));
 
+        if(!imgPath3.equals(""))
+            entity.addPart("uploaded_file3", new FileBody(new File(imgPath3)));
+
 		entity.addPart("mid", new StringBody(mid+""));
 		entity.addPart("name", new StringBody(txtname.getText()+""));
 		entity.addPart("email", new StringBody(txtEmail.getText()+""));
@@ -537,8 +648,10 @@ public class AddNewMemberActivity extends Activity {
 		if(!txtEditSpouse.getText().equals(null))
 			entity.addPart("spouse",new StringBody( txtEditSpouse.getText()+""));
 
+
 		entity.addPart("gender",new StringBody(gender));
 		request.setEntity(entity);
+
 
 		HttpResponse response = httpClient.execute(request);
 
@@ -615,6 +728,15 @@ public class AddNewMemberActivity extends Activity {
 				//System.out.println("Image Path : " + selectedImagePath);
 				//imgGallery.setImageURI(selectedImageUri);
 			}
+            if (requestCode == IMAGE_PICK3) {
+
+                this.imageFromGallery3(resultCode, data);
+                //Uri selectedImageUri = data.getData();
+                //selectedImagePath = getPath(selectedImageUri);
+                //Log.i("image:",selectedImagePath);
+                //System.out.println("Image Path : " + selectedImagePath);
+                //imgGallery.setImageURI(selectedImageUri);
+            }
 		}
 	}
 
@@ -660,6 +782,19 @@ public class AddNewMemberActivity extends Activity {
 		imgPath2=filePath;
 		updateImageView2(BitmapFactory.decodeFile(filePath));
 	}
+    private void imageFromGallery3(int resultCode, Intent data) {
+        Uri selectedImage = data.getData();
+        String [] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = AddNewMemberActivity.this.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+        imgPath3=filePath;
+        updateImageView3(BitmapFactory.decodeFile(filePath));
+    }
 	/**
 	 * Update the imageView with new bitmap
 	 * @param newImage
@@ -668,7 +803,7 @@ public class AddNewMemberActivity extends Activity {
 		//BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 1000, 1000, 90);
 
 		//this.image = bitmapProcessor.getBitmap();
-		this.image= newImage;
+		//this.image= newImage;
 		imgGallery.setImageBitmap(newImage);
 
 
@@ -677,11 +812,21 @@ public class AddNewMemberActivity extends Activity {
 		//BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 1000, 1000, 90);
 
 		//this.image = bitmapProcessor.getBitmap();
-		this.image= newImage;
+		//this.image= newImage;
 		imgfamily.setImageBitmap(newImage);
 
 
 	}
+    private void updateImageView3(Bitmap newImage) {
+        //BitmapProcessor bitmapProcessor = new BitmapProcessor(newImage, 1000, 1000, 90);
+
+        //this.image = bitmapProcessor.getBitmap();
+       // this.image= newImage;
+        imgSpouse.setImageBitmap(newImage);
+
+
+    }
+
 
     private class MyRelationAdpater extends BaseAdapter {
 
